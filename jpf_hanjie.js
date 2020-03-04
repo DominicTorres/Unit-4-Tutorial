@@ -56,6 +56,8 @@
 
 //run the init() function when the page loads
 window.onload = init;
+var puzzleCells;
+var cellBackground;
 
 function init(){
    //insert the title for first puzzle
@@ -69,6 +71,45 @@ function init(){
    for(var i = 0; i <puzzleButtons.length; i++){
       puzzleButtons[i].onclick = swapPuzzle;
    }
+   setupPuzzle();
+}
+
+function setupPuzzle(){
+   //create a query selector that will find every td in the table hanjie grid
+   puzzleCells = document.querySelectorAll("table#hanjieGrid td");
+
+   //set the intial color of every cell in the tabel to gold
+   for(var i = 0; i < puzzleCells.length; i++){
+      puzzleCells[i].style.backgroundColor = "rgb(233, 207, 29)";
+      //set the cell background color in response to the mouse down event
+      puzzleCells[i].onmousedown = setBackground;
+   }
+
+}
+
+function setBackground(e){
+   cellBackground = "rgb(101, 101, 101)";
+   e.target.style.backgroundColor = cellBackground;
+}
+
+function swapPuzzle(e){
+   var puzzleID = e.target.id;
+ 
+   var puzzleTitle = e.target.value;
+   document.getElementById("puzzleTitle").innerHTML = puzzleTitle;
+
+   switch(puzzleID){
+      case "puzzle1":
+         document.getElementById("puzzle").innerHTML = drawPuzzle(puzzle1Hint, puzzle1Rating, puzzle1);
+         break;
+      case "puzzle2":
+            document.getElementById("puzzle").innerHTML = drawPuzzle(puzzle2Hint, puzzle2Rating, puzzle2);
+            break;
+      case "puzzle3":
+            document.getElementById("puzzle").innerHTML = drawPuzzle(puzzle3Hint, puzzle3Rating, puzzle3);
+            break;
+   }
+   setupPuzzle();
 }
 
 
